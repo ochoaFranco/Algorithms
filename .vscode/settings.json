@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "pilas.h": "c",
+        "utilidades.h": "c",
+        "colas.h": "c",
+        "tipo_elemento.h": "c",
+        "stdlib.h": "c",
+        "p_utilidades.h": "c"
+    },
+    "cmake.configureOnOpen": false
+}
