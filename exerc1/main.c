@@ -4,8 +4,7 @@
 #include "../utilidades/p_utilidades.c"
 #include "../pilas/arbol_binario.c"
 
-void traverseLeftSubtree(NodoArbol current, Pila S);
-void preOrderTraversing(NodoArbol, Pila);
+void preOrderTraversing(ArbolBinario T);
 void preOrderR(NodoArbol);
 int main() {
     Pila S;
@@ -47,51 +46,45 @@ int main() {
     printf("\n");
     printf("Iterative:\n");
     // Displaying tree in pre-order.
-    preOrderTraversing(a_raiz(T), S);
+    preOrderTraversing(T);
 }
 
 
-void traverseLeftSubtree(NodoArbol current, Pila S) {
-    TipoElemento rightChild;
-    TipoElemento temp;
-    do {
-        // Check if it is a null branch.
-        if (a_es_rama_nula(current))
-            printf(".");
-        else {
-            temp = n_recuperar(current);
-            printf("%d ", temp->clave);
-        }
-        // Update node's value.
-        current = n_hijoizquierdo(current);
-        // Push the right child.
-        rightChild = n_recuperar(n_hijoderecho(current));
-        p_apilar(S, te_crear_con_valor(0, n_hijoderecho(current))); 
+void preOrderTraversing(ArbolBinario T) {
+    TipoElemento root, temp;
+    NodoArbol node, leftChild, rightChild;
+    bool isNull;
+    Pila st;  
+    st = p_crear();
+    // Push to the stack the root.
+    root = te_crear_con_valor(0, a_raiz(T));
+    p_apilar(st, root);
     
-    } while (!a_es_rama_nula(current));
-}
+    // traverse in pre-order.
+    while (!p_es_vacia(st)) {
+        temp = p_desapilar(st);
+        node = (NodoArbol)temp->valor;
+        if (!a_es_rama_nula(node)) {
+            printf("%d ", n_recuperar(node)->clave);
+        
+            leftChild = n_hijoizquierdo(node);
+            rightChild = n_hijoderecho(node);
+            
+            if (!a_es_rama_nula(rightChild))
+                p_apilar(st, te_crear_con_valor(0, rightChild));
+            
+            else if (a_es_rama_nula(leftChild))
+                printf(".");
 
-void preOrderTraversing(NodoArbol current, Pila S) {
-    TipoElemento temp;
-    NodoArbol value;
-    // Traverse left subtree.
-    traverseLeftSubtree(current, S);
-    // Traverse rigth subtree.
-    while (!p_es_vacia(S)) {
-        temp = p_desapilar(S);
-        
-        // Check if it's a null branch.
-        value = ((NodoArbol)temp->valor);
-        if (a_es_rama_nula(value))
+            if (!a_es_rama_nula(leftChild))
+                p_apilar(st, te_crear_con_valor(0, leftChild));
+            else
+                printf(".");
+        }
+        else 
             printf(".");
-        else
-            printf("%d ", n_recuperar(value)->clave);
-        
-        
-        traverseLeftSubtree(n_hijoizquierdo(value), S);
     }
 }
-
 
 void preOrderR(NodoArbol current) {
     TipoElemento temp;
