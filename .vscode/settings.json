@@ -5,7 +5,9 @@
         "colas.h": "c",
         "tipo_elemento.h": "c",
         "stdlib.h": "c",
-        "p_utilidades.h": "c"
+        "p_utilidades.h": "c",
+        "arbol-binario.h": "c",
+        "nodo.h": "c"
     },
     "cmake.configureOnOpen": false
 }
